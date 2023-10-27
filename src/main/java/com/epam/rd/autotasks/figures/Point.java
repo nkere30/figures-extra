@@ -17,4 +17,10 @@ class Point {
         return y;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(getClass()!=obj.getClass()) return false;
+        Point newPoint = (Point) obj;
+        return (newPoint.getX() == x) && (newPoint.getY() == y);
+    }
 }
