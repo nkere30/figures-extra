@@ -39,7 +39,7 @@ class Quadrilateral extends Figure{
         double y3 = secondLineStart.getY();
         double y4 = secondLineEnd.getY();
 
-        double t = ((x1 - x3) * (y3 - y4) - (y1 - y2) * (x3 - x4))/((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        double t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4))/((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
         double intersectionX = x1 + t * (x2 - x1);
         double intersectionY = y1 + t * (y2 - y1);
         return new Point(intersectionX, intersectionY);

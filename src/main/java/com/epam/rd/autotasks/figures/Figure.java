@@ -29,6 +29,6 @@ abstract class Figure{
         return (end.getY() - start.getY())/(end.getX() - start.getX());
     }
     public Point triangleCentroid(Point a, Point b, Point c) {
-        return new Point( 1.0 /3 * (a.getX() + b.getX() + c.getX()),  1.0 /3 *(a.getY() + b.getY() + c.getY()));
+        return new Point( 1.0 /3.0 * (a.getX() + b.getX() + c.getX()),  1.0 /3.0 *(a.getY() + b.getY() + c.getY()));
     }
 }
