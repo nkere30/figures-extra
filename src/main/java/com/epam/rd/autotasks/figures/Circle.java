@@ -5,11 +5,10 @@ import java.util.Objects;
 class Circle extends Figure{
     private Point center;
     private double radius;
-    private static final double DELTA = 1e-10;
     public Circle(Point center, double radius) {
         this.center = center;
         this.radius = radius;
-        if(!isNotDegenerative()) throw new IllegalArgumentException();
+        if(radius <= 0 || center == null) throw new IllegalArgumentException();
     }
 
     @Override
@@ -19,12 +18,10 @@ class Circle extends Figure{
 
     @Override
     public boolean isTheSame(Figure figure) {
-        return Objects.equals(getClass(),figure.getClass()) && (Objects.equals(centroid(), center)) && (Math.abs((Math.sqrt(figure.area()/Math.PI) - radius)) < DELTA);
-    }
-
-    @Override
-    public boolean isNotDegenerative() {
-        return radius > 0 && center != null;
+        return Objects.equals(getClass(),figure.getClass()) &&
+                (Math.abs(figure.centroid().getX() - center.getX()) < DELTA) &&
+                (Math.abs(figure.centroid().getY() - center.getY()) < DELTA) &&
+                (Math.abs(figure.area() - area()) < DELTA);
     }
 
     @Override

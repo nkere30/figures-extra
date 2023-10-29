@@ -10,17 +10,20 @@ class Triangle extends Figure{
         this.a = a;
         this.b = b;
         this.c = c;
-        if(!isNotDegenerative()) throw new IllegalArgumentException();
+        if(isDegenerativeTriangle(a, b, c)) throw new IllegalArgumentException();
     }
 
     @Override
     public Point centroid() {
-        return new Point( 1.0 /3 * (a.getX() + b.getX() + c.getX()),  1.0 /3 *(a.getY() + b.getY() + c.getY()));
+        return triangleCentroid(a, b, c);
     }
 
     @Override
     public boolean isTheSame(Figure figure) {
-        return false;
+        return Objects.equals(getClass(),figure.getClass()) &&
+                (Math.abs(figure.centroid().getX() - centroid().getX()) < DELTA) &&
+                (Math.abs(figure.centroid().getY() - centroid().getY()) < DELTA) &&
+                (Math.abs(figure.area() - area()) < DELTA);
     }
 
     /*
@@ -28,34 +31,8 @@ class Triangle extends Figure{
      */
     @Override
     public double area() {
-        double halfPerimeter = (side(a, b) + side(b, c) + side(a, c))/2;
-        return Math.sqrt(halfPerimeter * (halfPerimeter - side(a, b)) * (halfPerimeter - side(b, c)) * (halfPerimeter - side(a, c)));
+        double halfPerimeter = (distance(a, b) + distance(b, c) + distance(a, c))/2;
+        return Math.sqrt(halfPerimeter * (halfPerimeter - distance(a, b)) * (halfPerimeter - distance(b, c)) * (halfPerimeter - distance(a, c)));
     }
 
-    /*
-    Checks if triangle with given sides can exist or not.
-     */
-    @Override
-    public boolean isNotDegenerative() {
-        return (!Objects.isNull(a) && !Objects.isNull(b) && !Objects.isNull(c)) &&
-                ((side(a, b) > 0) && (side(b, c) > 0) && (side(a, c) > 0))
-                && ((side(a, b) + side(b, c)) > side(a, c))
-                && ((side(a, b) + side(a, c)) > side(b, c))
-                && ((side(a, c) + side(b, c)) > side(a, b))
-                && !(slope(a, b)==slope(b, c) && slope(b, c)==slope(a,c));
-    }
-
-    /*
-    Returns length of the side, takes start and end points as parameters
-     */
-    public double side(Point start, Point end) {
-        return Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
-    }
-
-    /*
-    Calculates the slope the line segment, with given start and end points.
-     */
-    public double slope(Point start, Point end) {
-        return (end.getY() - start.getY())/(end.getX() - start.getX());
-    }
 }
